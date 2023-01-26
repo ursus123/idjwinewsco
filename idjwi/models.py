@@ -22,14 +22,11 @@ class Name (models.Model):
     picture = models.ImageField(null=True,blank=True)
     to_table = models.CharField(choices=TABLE_CHOICES, max_length=50)
     created_at = models.DateField(auto_now=True)
+    created_by = models.ForeignKey('self',on_delete=models.CASCADE)
     updated_at = models.DateField(auto_now_add = True)
-
-
-  
+    updated_by = models.ForeignKey('self', on_delete=models.CASCADE)
 
 class Address (models.Model):
-    owner_id = models.ForeignKey(Name, on_delete=models.CASCADE, default=0)
-    address_type = models.CharField(max_length= 50,null=True,blank=True)
     street_number = models.CharField(max_length= 50,null=True,blank=True)
     street_name = models.CharField(max_length= 50,null=True,blank=True)
     city = models.CharField(max_length= 50,null=True,blank=True)
@@ -41,8 +38,20 @@ class Address (models.Model):
     zip_code = models.IntegerField(null=True,blank=True)
     longitude = models.IntegerField(null=True,blank=True)
     latitude =  models.IntegerField(null=True,blank=True)
-
-
+    address_type = models.CharField(max_length=50, null=True, blank=True)
+    owner_id = models.ManyToManyField(Name)
+    created_at = models.DateField(auto_now=True)
+    created_by = models.ManyToManyField(Name)
+    updated_at = models.DateField(auto_now_add=True)
+    updated_by = models.ManyToManyField(Name)
+class Type (models.Model):
+    type_name = models.CharField(max_length=50, blank= False)
+    for_table = models.CharField(choices=TABLE_CHOICES, max_length=50, blank=False)
+    owner_id = models.ManyToManyField(Name)
+    created_at = models.DateField(auto_now=True)
+    created_by = models.ManyToManyField(Name)
+    updated_at = models.DateField(auto_now_add=True)
+    updated_by = models.ManyToManyField(Name)
 
 class Contact(models.Model):
     contact_from_table = models.CharField(choices=TABLE_CHOICES, max_length=50)
@@ -60,6 +69,22 @@ class Contact(models.Model):
     work_email = models.EmailField(null=True,blank=True)
     backup_email = models.EmailField(null=True,blank=True)
     emergency_email = models.EmailField(null=True,blank=True)
+    owner_id = models.ManyToManyField(Name)
+    created_at = models.DateField(auto_now=True)
+    created_by = models.ManyToManyField(Name)
+    updated_at = models.DateField(auto_now_add=True)
+    updated_by = models.ManyToManyField(Name)
+
+class enterprise (models.Model):
+    names_id = models.ForeignKey(Name, blank = False, on_delete=models.CASCADE)
+    types_id = models.ManyToManyField(type)
+    addresses_id = models.ManyToManyField(Address)
+    industry = models.CharField(max_length=50, null=True, blanck =True)
+    contacts_id = models.ManyToManyField(Contact)
+    created_at = models.DateField(auto_now=True)
+    created_by = models.ManyToManyField(Name)
+    updated_at = models.DateField(auto_now_add=True)
+    updated_by = models.ManyToManyField(Name)
 
 class People (models.Model):
     names_id = models.ForeignKey(Name, on_delete=models.CASCADE)
@@ -73,6 +98,10 @@ class People (models.Model):
     gender = models.CharField(choices=GENDER_CHOICES, max_length=50,null=True,blank=True)
     hire_date = models.DateField(null=True,blank=True)
     salary = models.IntegerField(default=0, null=True,blank=True)
+    created_at = models.DateField(auto_now=True)
+    created_by = models.ManyToManyField(Name)
+    updated_at = models.DateField(auto_now_add=True)
+    updated_by = models.ManyToManyField(Name)
 
 class Item (models.Model):
     date_of_birth = models.DateField()
@@ -83,7 +112,10 @@ class Item (models.Model):
     width = models.CharField(max_length=50,null=True)
     color = models.CharField(max_length=50,null=True)
     received_date = models.DateField(null=True)
-
+    created_at = models.DateField(auto_now=True)
+    created_by = models.ManyToManyField(Name)
+    updated_at = models.DateField(auto_now_add=True)
+    updated_by = models.ManyToManyField(Name)
 
 class Container (models.Model):
     carrier = models.CharField(max_length=50, default=0)
@@ -92,4 +124,8 @@ class Container (models.Model):
     currency = models.CharField(max_length=50,null=True)
     received_date = models.DateField(null=True)
     arrival_date = models.DateField(null=True)
+    created_at = models.DateField(auto_now=True)
+    created_by = models.ManyToManyField(Name)
+    updated_at = models.DateField(auto_now_add=True)
+    updated_by = models.ManyToManyField(Name)
 

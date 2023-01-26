@@ -22,7 +22,6 @@ env.read_env()
 # 3. Setting up Variables
 SECRET_KEY = 'django-insecure-%!_ddvsg2f4or3gy)@jlujhmk@--wy(5fro0-21137+9ofdh+n'
 DEBUG = True
-
 ALLOWED_HOSTS = []
 ##___________________________________________________________________________________________________
 
