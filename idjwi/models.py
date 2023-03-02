@@ -44,6 +44,7 @@ class Address (models.Model):
     created_by = models.ManyToManyField(Name)
     updated_at = models.DateField(auto_now_add=True)
     updated_by = models.ManyToManyField(Name)
+
 class Type (models.Model):
     type_name = models.CharField(max_length=50, blank= False)
     for_table = models.CharField(choices=TABLE_CHOICES, max_length=50, blank=False)
