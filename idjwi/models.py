@@ -7,8 +7,6 @@ GENDER_CHOICES = (('Male','Male'),('Female','Female'),('Other','Other'))
 
 
 class Name (models.Model):
-    current_date = timezone.now()
-
     first_name = models.CharField(max_length=50, blank=False, null=False)
     middle_name = models.CharField(max_length=50,null=True,blank=True)
     last_name = models.CharField(max_length=50,blank=False, null=False)
@@ -125,6 +123,15 @@ class Container (models.Model):
     currency = models.CharField(max_length=50,null=True)
     received_date = models.DateField(null=True)
     arrival_date = models.DateField(null=True)
+    created_at = models.DateField(auto_now=True)
+    created_by = models.ManyToManyField(Name)
+    updated_at = models.DateField(auto_now_add=True)
+    updated_by = models.ManyToManyField(Name)
+
+class TimeRange(models.Model):
+    name = models.CharField(max_length=50)
+    start_time = models.DateField()
+    end_date = models.DateField()
     created_at = models.DateField(auto_now=True)
     created_by = models.ManyToManyField(Name)
     updated_at = models.DateField(auto_now_add=True)

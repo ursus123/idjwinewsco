@@ -11,11 +11,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent # This is the base direction o
 # (Passwords, secret keys, Api keys,...) which we don't want to appear in settings.py
 # We need to make Environment Variables creating a file with .ini extention
 # Make sure to the file into .gitignore
-import environ
-#from environs import Env
-
-env = environ.Env()
-env.read_env()
 ##___________________________________________________________________________________________________
 
 
@@ -35,7 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'idjwi',
-    'idjwiapp',
+    'idjwi.models'
 ]
 
 MIDDLEWARE = [
