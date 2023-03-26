@@ -1,4 +1,4 @@
-# Settings
+# SETTINGS
 
 # 1. 
 # Get the directory of the project (meaning of the path directory of idjwinewsco)
